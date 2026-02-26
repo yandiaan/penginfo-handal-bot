@@ -69,13 +69,13 @@ interface GitHubWebhookPayload {
   repository: GitHubRepository;
 }
 
-app.post("/webhook/github", async (req: Request, res: Response) => {
+app.post("/webhook/github", async (req: any, res: Response) => {
   const signature = req.headers["x-hub-signature-256"] as string;
 
   if (!signature) return res.status(401).send("Missing signature");
 
   const hmac = crypto.createHmac("sha256", WEBHOOK_SECRET);
-  const digest = "sha256=" + hmac.update(JSON.stringify(req.body)).digest("hex");
+  const digest = "sha256=" + hmac.update(req.rawBody).digest("hex");
 
   const isValid = crypto.timingSafeEqual(
     Buffer.from(signature),

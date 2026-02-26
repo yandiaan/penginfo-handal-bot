@@ -6,7 +6,13 @@ import crypto from "crypto";
 dotenv.config();
 
 const app = express();
-app.use(express.json());
+app.use(
+  express.json({
+    verify: (req: any, res, buf) => {
+      req.rawBody = buf;
+    },
+  })
+);
 
 const BOT_TOKEN = process.env.BOT_TOKEN!;
 const CHAT_ID = process.env.CHAT_ID!;

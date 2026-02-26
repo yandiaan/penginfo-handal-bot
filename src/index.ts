@@ -111,17 +111,17 @@ app.post("/webhook/github", async (req: any, res: Response) => {
     );
 
     const deploymentMessage = `
-${emoji} *Deployment Status*
+${emoji} <b>Deployment Status</b>
 
-*Project Name:* ${repository.name}
-*Environment:* ${deployment_status.environment}
-*Status:* ${deployment_status.state.toUpperCase()}
-*Branch/Ref:* ${deployment.ref}
-*Deployed By:* @${deployment_status.creator.login}
-*Description:* ${deployment_status.description || "-"}
-*Date:* ${deployedDate} WIB${deployment_status.environment_url ? `
-*Environment URL:* ${deployment_status.environment_url}` : ""}${deployment_status.log_url ? `
-*Log:* [View Logs](${deployment_status.log_url})` : ""}
+<b>Project Name:</b> ${repository.name}
+<b>Environment:</b> ${deployment_status.environment}
+<b>Status:</b> ${deployment_status.state.toUpperCase()}
+<b>Branch/Ref:</b> ${deployment.ref}
+<b>Deployed By:</b> @${deployment_status.creator.login}
+<b>Description:</b> ${deployment_status.description || "-"}
+<b>Date:</b> ${deployedDate} WIB${deployment_status.environment_url ? `
+<b>Environment URL:</b> ${deployment_status.environment_url}` : ""}${deployment_status.log_url ? `
+<b>Log:</b> <a href="${deployment_status.log_url}">View Logs</a>` : ""}
 `;
 
     await axios.post(
@@ -129,7 +129,7 @@ ${emoji} *Deployment Status*
       {
         chat_id: CHAT_ID,
         text: deploymentMessage,
-        parse_mode: "Markdown",
+        parse_mode: "HTML",
       }
     );
 
@@ -150,15 +150,15 @@ ${emoji} *Deployment Status*
     );
 
     const deploymentMessage = `
-${emoji} *Deployment*
+${emoji} <b>Deployment</b>
 
-*Project Name:* ${repository.name}
-*Action:* ${action}
-*Environment:* ${deployment.environment}
-*Branch/Ref:* ${deployment.ref}
-*Triggered By:* @${deployment.creator.login}
-*Description:* ${deployment.description || "-"}
-*Date:* ${deployedDate} WIB
+<b>Project Name:</b> ${repository.name}
+<b>Action:</b> ${action}
+<b>Environment:</b> ${deployment.environment}
+<b>Branch/Ref:</b> ${deployment.ref}
+<b>Triggered By:</b> @${deployment.creator.login}
+<b>Description:</b> ${deployment.description || "-"}
+<b>Date:</b> ${deployedDate} WIB
 `;
 
     await axios.post(
@@ -166,7 +166,7 @@ ${emoji} *Deployment*
       {
         chat_id: CHAT_ID,
         text: deploymentMessage,
-        parse_mode: "Markdown",
+        parse_mode: "HTML",
       }
     );
 
@@ -195,17 +195,17 @@ ${emoji} *Deployment*
   const link = pull_request.html_url;
 
   const message = `
-🔔 *Merge Request*
+🔔 <b>Merge Request</b>
 
-*Project Name:* ${projectName}
-*Action:* ${action}
-*User:* ${user}
-*Assignee:* ${assignees}
-*Reviewer:* ${reviewers}
-*Source Branch:* ${sourceBranch}
-*Target Branch:* ${targetBranch}
-*Requested Date:* ${requestedDate} WIB
-*Link MR:* [${title}](${link})
+<b>Project Name:</b> ${projectName}
+<b>Action:</b> ${action}
+<b>User:</b> ${user}
+<b>Assignee:</b> ${assignees}
+<b>Reviewer:</b> ${reviewers}
+<b>Source Branch:</b> ${sourceBranch}
+<b>Target Branch:</b> ${targetBranch}
+<b>Requested Date:</b> ${requestedDate} WIB
+<b>Link MR:</b> <a href="${link}">${title}</a>
 `;
 
   await axios.post(
@@ -213,7 +213,7 @@ ${emoji} *Deployment*
     {
       chat_id: CHAT_ID,
       text: message,
-      parse_mode: "Markdown",
+      parse_mode: "HTML",
     }
   );
 
